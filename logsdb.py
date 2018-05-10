@@ -20,7 +20,7 @@ def popular_authors():
 	conn.close()
 
 def errors_insights():
-	"""Return erros over 2%"""
+	"""Return erros over 1%"""
 	conn = psycopg2.connect("dbname=news user=vagrant")
 	cur = conn.cursor()
 	cur.execute("SELECT f.date, (s.errors/(f.requests*1.0)) FROM (SELECT date(time), COUNT(*) AS requests FROM log GROUP BY date(time)) AS f, (SELECT date(time), COUNT(*) AS errors FROM log WHERE status LIKE '%404%' GROUP BY date(time)) AS s WHERE f.date = s.date AND s.errors/(f.requests*1.0)>0.01;")

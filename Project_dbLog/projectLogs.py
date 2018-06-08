@@ -17,7 +17,6 @@ if __name__ == '__main__':
         return cur.fetchall()
         conn.close()
 
-
     def popular_authors():
         """Return most popular authors"""
         conn = psycopg2.connect("dbname=news user=vagrant")
@@ -30,7 +29,6 @@ if __name__ == '__main__':
             """)
         return cur.fetchall()
         conn.close()
-
 
     def errors_insights():
         """Return erros over 1%"""
@@ -63,4 +61,3 @@ for a in authors:
 print("\nDays when errors is up to 1%:")
 for e in errors:
     print("%s - %.2f%%" % (e[0].strftime("%B %d, %Y"), e[1]*100))
-

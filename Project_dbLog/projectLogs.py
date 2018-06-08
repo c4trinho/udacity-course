@@ -7,7 +7,7 @@ from datetime import datetime as d
 if __name__ == '__main__':
     def popular_posts():
         """Return best 3 most popular posts of all time."""
-        conn = psycopg2.connect("dbname=news user=vagrant")
+        conn = psycopg2.connect("dbname=news")
         cur = conn.cursor()
         cur.execute("""
             SELECT articles.title, count(log) AS views FROM articles,
@@ -19,7 +19,7 @@ if __name__ == '__main__':
 
     def popular_authors():
         """Return most popular authors"""
-        conn = psycopg2.connect("dbname=news user=vagrant")
+        conn = psycopg2.connect("dbname=news")
         cur = conn.cursor()
         cur.execute("""
             SELECT authors.name, count(log) AS views FROM articles,
@@ -32,7 +32,7 @@ if __name__ == '__main__':
 
     def errors_insights():
         """Return erros over 1%"""
-        conn = psycopg2.connect("dbname=news user=vagrant")
+        conn = psycopg2.connect("dbname=news")
         cur = conn.cursor()
         cur.execute("""
            SELECT f.date, (s.errors/(f.requests*1.0))

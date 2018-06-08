@@ -11,7 +11,7 @@ Are they:
 + `popular_authors()` - Return most popular authors; 
 + `errors_insights()` - Return requests errors over 2%
 
-## REQUIREMENTS
+## Requirements
 + Postgres
 + Python 2.7v & lib psycopg2
 + Database news (you can download here: https://d17h27t6h515a5.cloudfront.net/topher/2016/August/57b5f748_newsdata/newsdata.zip )

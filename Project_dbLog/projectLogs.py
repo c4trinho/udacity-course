@@ -1,44 +1,51 @@
+#!/usr/bin/env python
 # SQL REQUESTS FOR LOG PROJECT
 
 import psycopg2
 from datetime import datetime as d
 
-
-def popular_posts():
-    """Return best 3 most popular posts of all time."""
-    conn = psycopg2.connect("dbname=news user=vagrant")
-    cur = conn.cursor()
-    cur.execute("SELECT articles.title, count(log) AS views FROM articles, " +
-                "log WHERE articles.slug = replace(log.path,'/article/','') " +
-                "GROUP BY articles.title ORDER BY views DESC LIMIT 3")
-    return cur.fetchall()
-    conn.close()
-
-
-def popular_authors():
-    """Return most popular authors"""
-    conn = psycopg2.connect("dbname=news user=vagrant")
-    cur = conn.cursor()
-    cur.execute("SELECT authors.name, count(log) AS views FROM articles, " +
-                "authors, log WHERE articles.slug = replace(log.path " +
-                ",'/article/','') AND articles.author = authors.id GROUP BY " +
-                "authors.name ORDER BY views DESC;")
-    return cur.fetchall()
-    conn.close()
+if __name__ == '__main__':
+    def popular_posts():
+        """Return best 3 most popular posts of all time."""
+        conn = psycopg2.connect("dbname=news user=vagrant")
+        cur = conn.cursor()
+        cur.execute("""
+            SELECT articles.title, count(log) AS views FROM articles,
+            log WHERE articles.slug = replace(log.path,'/article/','')
+            GROUP BY articles.title ORDER BY views DESC LIMIT 3;
+            """)
+        return cur.fetchall()
+        conn.close()
 
 
-def errors_insights():
-    """Return erros over 1%"""
-    conn = psycopg2.connect("dbname=news user=vagrant")
-    cur = conn.cursor()
-    cur.execute("SELECT f.date, (s.errors/(f.requests*1.0)) " +
-                "FROM (SELECT date(time), COUNT(*) AS requests FROM log " +
-                "GROUP BY date(time)) AS f, (SELECT date(time), COUNT(*) " +
-                "AS errors FROM log WHERE status LIKE '%404%' " +
-                "GROUP BY date(time)) AS s WHERE f.date = s.date " +
-                "AND s.errors/(f.requests*1.0)>0.01;")
-    return cur.fetchall()
-    conn.close()
+    def popular_authors():
+        """Return most popular authors"""
+        conn = psycopg2.connect("dbname=news user=vagrant")
+        cur = conn.cursor()
+        cur.execute("""
+            SELECT authors.name, count(log) AS views FROM articles,
+            authors, log WHERE articles.slug = replace(log.path
+            ,'/article/','') AND articles.author = authors.id GROUP BY
+            authors.name ORDER BY views DESC;
+            """)
+        return cur.fetchall()
+        conn.close()
+
+
+    def errors_insights():
+        """Return erros over 1%"""
+        conn = psycopg2.connect("dbname=news user=vagrant")
+        cur = conn.cursor()
+        cur.execute("""
+           SELECT f.date, (s.errors/(f.requests*1.0))
+           FROM (SELECT date(time), COUNT(*) AS requests FROM log
+           GROUP BY date(time)) AS f, (SELECT date(time), COUNT(*)
+           AS errors FROM log WHERE status = '404 NOT FOUND'
+           GROUP BY date(time)) AS s WHERE f.date = s.date
+           AND s.errors/(f.requests*1.0)>0.01;
+           """)
+        return cur.fetchall()
+        conn.close()
 
 
 posts = popular_posts()

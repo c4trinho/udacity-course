@@ -22,4 +22,4 @@ Are they:
 2. Clone udacit-course repository; tips: use command `git clone git@github.com:c4trinho/udacity-course.git`
 3. If you are on a terminal, invoke `projectLogs.py` using command `python projectLogs.py`.
 Also you can use the GUI to run this script, clicking on respective file.
-4. Done. You can view all dabase `news` insights .
+4. Done. You can view all database `news` insights .

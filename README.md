@@ -19,7 +19,7 @@ Are they:
 ## How to use?
 
 1. Download `news` database using above link;
-2. Unpack `newsdata.zip` and install DB: `psql -d news -f newsdata.sql`;
+2. Unpack `newsdata.zip` and install DB: `unzip newsdata.zip; psql -d news -f newsdata.sql`;
 3. Clone udacit-course repository; tips: use command `git clone git@github.com:c4trinho/udacity-course.git`;
 4. If you are on a terminal, invoke `projectLogs.py` using command `python projectLogs.py`.
 Also you can use the GUI to run this script, clicking on respective file.
